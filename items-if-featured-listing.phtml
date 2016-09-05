@@ -1,0 +1,48 @@
+<?php
+$result = $this->result;
+$ctName = $this->ctName;
+
+// css class for anchors around sponsored content
+$sponsored = $result->isSponsored() || $result->isNative() ? 'item--sponsored' . ' ' : null;
+$articleUrl = $result->getUrl() ?: null;
+$overLine = $result->getOverline() ?: null;
+$headLine = $result->getHeadline() ?: null;
+$dateTime = $result->getFormatedDatetime("M j, Y, g:i a T ", $this->getMarketTimezone()) ?: null;
+?>
+
+<!-- <?= $result->getType() . ' ' . $result->getId() ?> -->
+<a href="<?= $articleUrl ?>" class="item item--flag <?= $sponsored ?>" data-ct="<?= $ctName . 'Headline Only' ?>">
+    <?php
+    if ($sponsored):
+        ?>
+        <div class="item__body">
+            <div class="meta">
+                <span class="meta-item"><strong><?= !empty($overline) ? $overLine : 'Paid Content' ?></strong></span>
+            </div>
+            <h3 class="item__title"><?= $headLine ?></h3>
+        </div>
+        <?php
+    else:
+        ?>
+        <div class="item__body">
+            <div class="meta">
+                <?php if ($dateTime): ?>
+                    <span class="meta-item">
+                <time>
+                    <?php if ($result->isPremium()): ?>
+                    <i class="icon-key icon--branded icon--larger"></i>&nbsp;
+                    <?php endif; ?>
+                    <?= $dateTime ?>
+                </time>
+            </span>
+                <?php endif;
+                if ($overLine && !$this->suppress_overline):?>
+                    <span class="meta-item"><?= $overLine ?></span>
+                <?php endif ?>
+            </div>
+            <?php if ($headLine): ?>
+                <h3 class="item__title"><?= $headLine ?></h3>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+</a>

@@ -1,0 +1,34 @@
+Javascript Array Notes
+
+
+
+//// Array.prototype.slice
+In the following, we convert the arguments object of a function into a true array using Array.from() or Array.prototype.slice depending on browser support:
+//
+
+function test(){
+    var argarray = (Array.from)? Array.from(arguments) : Array.prototype.slice(arguments)
+    return argarray
+}
+ 
+test("George", "Kelly", "Julia") // returns array ["George", "Kelly", Julia"]
+//
+
+Array.from("George") // returns ["G", "e", "o", "r", "g", "e"]
+"George".split("") // returns ["G", "e", "o", "r", "g", "e"]
+//
+
+var newArray = Array.from([1,2,3,4], function(el){
+    return el * 3
+})
+
+console.log(newArray) // [3,6,9,12]
+//
+
+
+
+
+
+
+
+
